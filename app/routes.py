@@ -7,7 +7,7 @@ import frontmatter
 
 router = APIRouter()
 
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent
 templates = Jinja2Templates(directory=str(BASE_DIR / "templates"))
 CONTENT_DIR = BASE_DIR / "content"
 
