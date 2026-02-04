@@ -6,9 +6,10 @@ import json
 import frontmatter
 
 router = APIRouter()
-templates = Jinja2Templates(directory="templates")
 
-CONTENT_DIR = Path("content")
+BASE_DIR = Path(__file__).resolve().parent.parent
+templates = Jinja2Templates(directory=str(BASE_DIR / "templates"))
+CONTENT_DIR = BASE_DIR / "content"
 
 def get_news_items():
     news_dir = CONTENT_DIR / "news"
