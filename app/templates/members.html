@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}Members - GLIMPRINT{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div class="container">
+        <h1>Members</h1>
+        <p class="lead">Meet the people behind GLIMPRINT.</p>
+    </div>
+</section>
+
+<section class="container content-section">
+    <div class="members-grid">
+        {% for member in members %}
+        <div class="member-card">
+            <h3>{{ member.name }}</h3>
+            <p class="member-role">{{ member.role }}</p>
+            <p class="member-inst">{{ member.institution }}</p>
+            <p>{{ member.bio }}</p>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

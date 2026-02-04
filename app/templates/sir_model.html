@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Basic Viral SIR model - GLIMPRINT{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div class="container">
+        <h1>Basic Viral SIR model</h1>
+        <p class="lead">By Lorenzo Felletti</p>
+    </div>
+</section>
+
+<section class="container content-section">
+    <div class="model-container" style="text-align: center;">
+        <p>This model was kindly provided by Lorenzo Felletti.</p>
+        <p>Source code available at <a href="https://github.com/lorenzofelletti/sirsimx" target="_blank">GitHub</a>.</p>
+        <div class="iframe-wrapper" style="margin-top: 2rem;">
+            <iframe src="https://lorenzofelletti.github.io/sirsimx/" title="L Felletti's SIR in JavaScript" width="100%"
+                height="800" style="border: 1px solid #ddd; border-radius: 8px;"></iframe>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="hero">
+    <div class="container">
+        <h1>GLIMPRINT</h1>
+        <p class="hero-text">We are a global, multidisciplinary alliance facilitating the development and application of
+            predictive immune system models to improve our understanding of the human immune system.</p>
+        <a href="/about" class="btn btn-primary">Learn More</a>
+    </div>
+</section>
+
+<section class="latest-news container">
+    <h2>Latest News</h2>
+    <div class="news-grid">
+        {% for item in news_items %}
+        <article class="news-card">
+            <div class="news-image">
+                {% if item.image %}
+                <img src="{{ item.image }}" alt="{{ item.title }}">
+                {% else %}
+                <div class="placeholder-image"></div>
+                {% endif %}
+            </div>
+            <div class="news-content">
+                <h3><a href="/news/{{ item.slug }}">{{ item.title }}</a></h3>
+                <p class="news-date">{{ item.date }}</p>
+                <p class="news-summary">{{ item.summary }}</p>
+            </div>
+        </article>
+        {% endfor %}
+    </div>
+    <div class="view-all">
+        <a href="/news" class="btn btn-secondary">View All News</a>
+    </div>
+</section>
+{% endblock %}

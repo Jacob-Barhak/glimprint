@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}News - GLIMPRINT{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div class="container">
+        <h1>Latest News</h1>
+    </div>
+</section>
+
+<section class="container content-section">
+    <div class="news-list">
+        {% for item in news_items %}
+        <article class="news-item">
+            <div class="news-item-content">
+                <h2><a href="/news/{{ item.slug }}">{{ item.title }}</a></h2>
+                <div class="meta">
+                    <span class="date">{{ item.date }}</span>
+                </div>
+                <p>{{ item.summary }}</p>
+                <a href="/news/{{ item.slug }}" class="read-more">Read More &rarr;</a>
+            </div>
+        </article>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

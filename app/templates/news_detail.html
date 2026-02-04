@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}{{ item.title }} - GLIMPRINT{% endblock %}
+
+{% block content %}
+<article class="news-detail">
+    <header class="news-header">
+        <div class="container">
+            <h1>{{ item.title }}</h1>
+            <p class="date">{{ item.date }}</p>
+        </div>
+    </header>
+    <div class="container news-body">
+        {% if item.image %}
+        <img src="{{ item.image }}" alt="{{ item.title }}" class="main-image">
+        {% endif %}
+        <div class="content">
+            {{ item.content | safe }}
+        </div>
+    </div>
+</article>
+{% endblock %}
