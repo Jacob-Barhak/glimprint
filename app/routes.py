@@ -11,6 +11,33 @@ BASE_DIR = Path(__file__).resolve().parent
 templates = Jinja2Templates(directory=str(BASE_DIR / "templates"))
 CONTENT_DIR = BASE_DIR / "content"
 
+@router.get("/debug_files")
+async def debug_files():
+    import os
+    files_list = []
+    # Walk from current directory
+    for root, dirs, files in os.walk("."):
+        for file in files:
+            files_list.append(os.path.join(root, file))
+    
+    # Also check BASE_DIR specifically
+    base_dir_files = []
+    try:
+        if BASE_DIR.exists():
+             for root, dirs, files in os.walk(str(BASE_DIR)):
+                for file in files:
+                    base_dir_files.append(os.path.join(root, file))
+    except Exception as e:
+        base_dir_files.append(str(e))
+
+    return {
+        "cwd": os.getcwd(),
+        "base_dir": str(BASE_DIR),
+        "files_in_cwd": files_list,
+        "files_in_base_dir": base_dir_files,
+        "template_dir": str(templates.env.loader.searchpath)
+    }
+
 def get_news_items():
     news_dir = CONTENT_DIR / "news"
     items = []
