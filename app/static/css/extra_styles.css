@@ -1,0 +1,507 @@
+/* Simplified Seminar List */
+.seminars-list-simple {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.seminar-item-simple {
+    background: #fff;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    border-left: 4px solid var(--primary-color);
+    transition: transform 0.2s ease;
+}
+
+.seminar-item-simple:hover {
+    transform: translateX(4px);
+}
+
+.seminar-speaker {
+    font-size: 0.95rem;
+    color: #d00000;
+    /* UNL Red or distinct color */
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.seminar-header h3 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.25rem;
+}
+
+.seminar-header h3 a {
+    color: var(--secondary-color);
+    text-decoration: none;
+}
+
+.seminar-header h3 a:hover {
+    color: var(--primary-color);
+}
+
+.seminar-date {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    background: #f0f4f8;
+    border-radius: 100px;
+    font-size: 0.875rem;
+    color: #666;
+    font-weight: 500;
+}
+
+/* Publications Styles (Matching Seminars) */
+.publications-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.publication-item {
+    background: #fff;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    border-left: 4px solid var(--primary-color);
+    transition: transform 0.2s ease;
+}
+
+.publication-item:hover {
+    transform: translateX(4px);
+}
+
+.publication-item h3 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.25rem;
+}
+
+.publication-item h3 a {
+    color: var(--secondary-color);
+    text-decoration: none;
+}
+
+.publication-item h3 a:hover {
+    color: var(--primary-color);
+}
+
+/* Seminar Detail Styles */
+.seminar-detail-header h2 {
+    color: #555;
+    font-size: 1.5rem;
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    font-weight: 400;
+}
+
+.seminar-meta {
+    background: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.meta-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.meta-icon {
+    font-size: 1.25rem;
+}
+
+.seminar-abstract {
+    line-height: 1.8;
+    color: #333;
+    font-size: 1.1rem;
+}
+
+.register-btn {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 0.5rem 1.5rem;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.register-btn:hover {
+    background-color: #ba0c2f;
+    /* Darker red */
+    color: white;
+}
+
+/* Members Grid */
+.members-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2rem;
+}
+
+.member-card {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+    border: 1px solid #eee;
+}
+
+.member-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.member-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+}
+
+.member-image {
+    width: 100%;
+    height: 350px;
+    background: #f4f4f4;
+    overflow: hidden;
+}
+
+.member-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+}
+
+.placeholder-member {
+    width: 100%;
+    height: 100%;
+    background: #e0e0e0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.placeholder-member::after {
+    content: "👤";
+    font-size: 4rem;
+    color: #bbb;
+}
+
+.member-info {
+    padding: 1.5rem;
+}
+
+.member-info h3 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.15rem;
+    color: var(--secondary-color);
+}
+
+.member-affiliation {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 0.75rem;
+    line-height: 1.4;
+}
+
+.member-email a {
+    font-size: 0.85rem;
+    color: var(--primary-color);
+}
+
+.member-links {
+    margin-top: 1rem;
+    font-size: 0.85rem;
+}
+
+.member-links a {
+    display: inline-block;
+    margin-bottom: 0.25rem;
+    color: #555;
+    text-decoration: underline;
+}
+
+/* Member Detail */
+.member-detail-container {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 3rem;
+}
+
+@media (max-width: 768px) {
+    .member-detail-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+.member-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.member-detail-image img {
+    width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.member-contact h3,
+.member-links-list li {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.member-links-list {
+    list-style: none;
+    padding: 0;
+}
+
+.member-links-list li {
+    margin-bottom: 0.5rem;
+}
+
+.member-content h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    margin-top: 2rem;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 0.5rem;
+}
+
+.member-content h2:first-child {
+    margin-top: 0;
+}
+
+.back-link {
+    margin-top: 3rem;
+    padding-top: 1rem;
+    border-top: 1px solid #eee;
+}
+
+/* News Styles */
+.submit-news-line {
+    font-size: 1.1rem;
+    color: #666;
+    margin-top: 0.5rem;
+}
+
+.news-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.news-card {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    transition: transform 0.2s;
+    display: flex;
+    flex-direction: column;
+}
+
+.news-card:hover {
+    transform: translateY(-5px);
+}
+
+.news-link-wrapper {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.news-image {
+    height: 200px;
+    background: #eee;
+    position: relative;
+    overflow: hidden;
+}
+
+.news-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.news-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    color: #fff;
+    background: #ccc;
+}
+
+.news-placeholder.seminar-placeholder {
+    background: #d00000;
+}
+
+/* UNL Red */
+.news-placeholder.workshop-placeholder {
+    background: #004d99;
+}
+
+/* Blue */
+.news-placeholder.news-placeholder {
+    background: #333;
+}
+
+/* Dark */
+
+.news-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(208, 0, 0, 0.9);
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.news-content {
+    padding: 1.5rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.news-date {
+    font-size: 0.85rem;
+    color: #888;
+    margin-bottom: 0.5rem;
+}
+
+.news-content h3 {
+    margin: 0 0 1rem 0;
+    font-size: 1.2rem;
+    line-height: 1.4;
+    color: #333;
+}
+
+.news-summary {
+    font-size: 0.95rem;
+    color: #666;
+    line-height: 1.6;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* Detail */
+.news-detail header {
+    margin-bottom: 2rem;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 1rem;
+}
+
+.news-detail h1 {
+    margin-bottom: 0.5rem;
+}
+
+.news-detail-image {
+    margin-bottom: 2rem;
+    max-height: 400px;
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+.news-detail-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.news-body {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #333;
+    margin-bottom: 3rem;
+}
+
+.news-body img {
+    max-width: 100%;
+    height: auto;
+    margin: 1rem 0;
+}
+
+.social-share {
+    border-top: 1px solid #eee;
+    padding-top: 2rem;
+    margin-top: 2rem;
+}
+
+.share-buttons {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+}
+
+.share-btn {
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: 600;
+    color: white;
+    background: #555;
+    transition: opacity 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.share-btn svg {
+    fill: currentColor;
+}
+
+.share-btn:hover {
+    opacity: 0.9;
+    color: #fff;
+}
+
+.share-btn.twitter {
+    background: #000;
+}
+
+.share-btn.facebook {
+    background: #1877f2;
+}
+
+.share-btn.linkedin {
+    background: #0077b5;
+}
+
+.share-btn.substack {
+    background: #FF6719;
+}
+
+.share-btn.mastodon {
+    background: #6364FF;
+}
+
+.share-btn.truth {
+    background: #E01E5A;
+}
+
+/* Approximating brand color or dark */
+.share-btn.email {
+    background: #d00000;
+}

@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block title %}{{ member.name }} - GLIMPRINT{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div class="container">
+        <h1>{{ member.name }}</h1>
+        {% if member.affiliation %}
+        <p>{{ member.affiliation }}</p>
+        {% endif %}
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <div class="member-detail-container">
+            <div class="member-sidebar">
+                <div class="member-detail-image">
+                    {% if member.image_data %}
+                    <img src="/members/image/{{ member.slug }}" alt="{{ member.name }}">
+                    {% else %}
+                    <div class="placeholder-member large"></div>
+                    {% endif %}
+                </div>
+
+                <div class="member-contact">
+                    {% if member.email %}
+                    <h3>Contact</h3>
+                    <p><a href="mailto:{{ member.email }}">{{ member.email }}</a></p>
+                    {% endif %}
+
+                    {% if member.links_list %}
+                    <h3>Links</h3>
+                    <ul class="member-links-list">
+                        {% for link in member.links_list %}
+                        <li><a href="{{ link.url }}" target="_blank">{{ link.text }}</a></li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="member-content">
+                {% if member.statement %}
+                <div class="member-bio">
+                    <h2>Biography</h2>
+                    {{ member.statement | safe }}
+                </div>
+                {% endif %}
+
+                {% if member.education %}
+                <div class="member-education">
+                    <h2>Education</h2>
+                    {{ member.education | safe }}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="back-link">
+            <a href="/members">← Back to Members</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <h1>News</h1>
+        <p class="submit-news-line">
+            To submit a new news item contact <a href="mailto:info@glimprint.org">info@glimprint.org</a>
+        </p>
+    </div>
+</div>
+
+<div class="container">
+    <div class="news-grid">
+        {% for item in news_items %}
+        <div class="news-card {{ item.type|lower }}-card">
+            <a href="{{ item.url }}" class="news-link-wrapper">
+                <div class="news-image">
+                    {% if item.image_url %}
+                    <img src="{{ item.image_url }}" alt="{{ item.title }}">
+                    {% else %}
+                    <div class="news-placeholder {{ item.type|lower }}-placeholder">
+                        <span>{{ item.type[0] }}</span>
+                    </div>
+                    {% endif %}
+                    <span class="news-badge">{{ item.type }}</span>
+                </div>
+                <div class="news-content">
+                    <div class="news-date">{{ item.display_date or item.date }}</div>
+                    <h3>{{ item.title }}</h3>
+                    {% if item.summary %}
+                    <p class="news-summary">{{ item.summary }}</p>
+                    {% endif %}
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

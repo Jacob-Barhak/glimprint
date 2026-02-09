@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}{{ workshop.title }} - GLIMPRINT Workshops{% endblock %}
+
+{% block content %}
+<section class="page-header generic-header">
+    <div class="container">
+        <a href="/activities/workshops" class="back-link" style="color: white; text-decoration: underline;">← Back to
+            Workshops</a>
+        <h1 style="margin-top: 10px;">{{ workshop.title }}</h1>
+        <p style="font-size: 1.2rem; opacity: 0.9;">{{ workshop.display_date }} {% if workshop.location %}| {{
+            workshop.location }}{% endif %}</p>
+    </div>
+</section>
+
+<section class="content-section">
+    <div class="container seminar-detail">
+        {% if workshop.image_data %}
+        <div class="seminar-detail-image" style="margin-bottom: 20px;">
+            <img src="/workshops/image/{{ workshop.slug }}" alt="{{ workshop.title }}"
+                style="max-width: 100%; height: auto; border-radius: 8px;">
+        </div>
+        {% endif %}
+
+        <div class="seminar-meta" style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+            <div class="row">
+                <div class="col-md-6">
+                    <p><strong>Date:</strong> {{ workshop.display_date }}</p>
+                    {% if workshop.location %}
+                    <p><strong>Location:</strong> {{ workshop.location }}</p>
+                    {% endif %}
+                </div>
+                <div class="col-md-6 text-right">
+                    {% if workshop.external_link %}
+                    <a href="{{ workshop.external_link }}" class="btn btn-primary" target="_blank"
+                        style="padding: 10px 20px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px;">More
+                        Details / Register</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <div class="seminar-abstract">
+            <h3>Details</h3>
+            <div class="abstract-content" style="line-height: 1.6;">
+                {{ workshop.details | safe }}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

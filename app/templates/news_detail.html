@@ -1,22 +1,109 @@
 {% extends "base.html" %}
 
-{% block title %}{{ item.title }} - GLIMPRINT{% endblock %}
-
 {% block content %}
-<article class="news-detail">
-    <header class="news-header">
-        <div class="container">
+<div class="container">
+    <article class="news-detail">
+        <header class="news-detail-header">
+            <a href="/news" class="back-link">&larr; Back to News</a>
             <h1>{{ item.title }}</h1>
-            <p class="date">{{ item.date }}</p>
-        </div>
-    </header>
-    <div class="container news-body">
+            <div class="news-meta">
+                <span class="news-date">{{ item.date }}</span>
+            </div>
+        </header>
+
         {% if item.image %}
-        <img src="{{ item.image }}" alt="{{ item.title }}" class="main-image">
-        {% endif %}
-        <div class="content">
-            {{ item.content | safe }}
+        <div class="news-detail-image">
+            <img src="/news/image/{{ request.path_params.slug }}" alt="{{ item.title }}">
         </div>
-    </div>
-</article>
+        {% endif %}
+
+        <div class="news-body">
+            {{ item.body | safe }}
+        </div>
+
+        {% if item.related_links %}
+        <div class="related-links">
+            <h3>Related Links</h3>
+            <ul>
+                {% for link in item.related_links %}
+                <li><a href="{{ link.url }}" target="_blank">{{ link.text }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+
+        <div class="social-share">
+            <h3>Share this news</h3>
+            <div class="share-buttons">
+                <!-- Simple share links using intent URLs -->
+                <!-- Simple share links using intent URLs -->
+                <a href="https://twitter.com/intent/tweet?text={{ item.title }}&url={{ request.url }}" target="_blank"
+                    class="share-btn twitter">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                        <path
+                            d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                    </svg>
+                    X (Twitter)
+                </a>
+                <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.url }}" target="_blank"
+                    class="share-btn facebook">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                        <path
+                            d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                    </svg>
+                    Facebook
+                </a>
+                <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ request.url }}&title={{ item.title }}"
+                    target="_blank" class="share-btn linkedin">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                        <path
+                            d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                    </svg>
+                    LinkedIn
+                </a>
+
+                <!-- New Buttons -->
+                <!-- Substack (Use an icon that looks like Substack - orange with white S roughly? Or just SVG) -->
+                <a href="https://substack.com/app-link/post?publication_id=&post_id=&utm_source=share&utm_medium=web&utm_content=web-share-button&url={{ request.url }}"
+                    target="_blank" class="share-btn substack">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                        <path
+                            d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46zM22.54 0H1.46v2.836h21.08V0z" />
+                    </svg>
+                    Substack
+                </a>
+
+                <!-- Mastodon -->
+                <a href="https://mastodonshare.com/?text={{ item.title }}&url={{ request.url }}" target="_blank"
+                    class="share-btn mastodon">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                        <path
+                            d="M23.268 5.313c-.35-2.578-2.617-4.61-5.304-5.06C15.908.124 13.924 0 12.006 0h-.012c-1.928 0-3.903.125-5.968.253-2.68.45-4.942 2.482-5.292 5.06-.39 2.872-.518 7.376-.11 11.232.33 3.124 2.378 5.483 5.334 6.22 2.37.59 4.706.49 6.883.056 2.05-.41 3.59-1.25 3.59-1.25l-.364-2.578s-1.85.836-3.868 1.054c-1.874.202-3.834.076-3.834-2.228 0-.106.002-.218.006-.33.004-.03.007-.06.012-.09.006-.034.013-.067.018-.1 4.734 1.06 10.198.868 12.35-.49 1.636-1.036 2.33-2.903 2.502-5.118.23-2.97.098-6.19-.248-6.75zM10.976 15.35h-2.58V7.934h2.58v7.416zm2.05-4.694c-.454-.863-1.004-1.295-1.65-1.295-.647 0-1.196.432-1.65 1.295V15.35h-2.57V7.934h2.57v1.897c.45-.89 1.077-1.334 1.88-1.334.803 0 1.432.444 1.88 1.334v-1.9h2.57v7.416h-2.57L13.026 10.655z" />
+                    </svg>
+                    Mastodon
+                </a>
+
+                <!-- Truth Social -->
+                <!-- Truth Social uses a specific icon, often T star or similar. I'll use a generic placeholder or the logo SVG if known. -->
+                <!-- Truth logo is similar to T with some star element. A simple T icon might suffice or I can approximate. -->
+                <a href="https://truthsocial.com/share?text={{ item.title }} {{ request.url }}" target="_blank"
+                    class="share-btn truth">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                        <path
+                            d="M16.92 0H14.5l-6 8.5H0v15.5h24V8.5h-5.92L16.92 0zM8.5 21.5H3V11h3.75L8.5 21.5zm12.5 0h-9.25l-1.75-9H21v9z" />
+                    </svg>
+                    Truth Social
+                </a>
+
+                <a href="mailto:?subject={{ item.title }}&body={{ request.url }}" class="share-btn email">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                        <path
+                            d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
+                    </svg>
+                    Email
+                </a>
+            </div>
+        </div>
+    </article>
+</div>
 {% endblock %}

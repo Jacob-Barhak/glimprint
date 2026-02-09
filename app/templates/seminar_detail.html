@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block title %}{{ seminar.title }} - GLIMPRINT Seminars{% endblock %}
+
+{% block content %}
+<section class="page-header generic-header">
+    <div class="container">
+        <a href="/activities/seminars" class="back-link" style="color: white; text-decoration: underline;">← Back to
+            Seminars</a>
+        <h1 style="margin-top: 10px;">{{ seminar.title }}</h1>
+        {% if seminar.speaker %}
+        <h2 style="font-size: 1.5rem; opacity: 0.9;">{{ seminar.speaker }}</h2>
+        {% endif %}
+    </div>
+</section>
+
+<section class="content-section">
+    <div class="container seminar-detail">
+        {% if seminar.image_data %}
+        <div class="seminar-detail-image" style="margin-bottom: 20px;">
+            <img src="/seminars/image/{{ seminar.slug }}" alt="{{ seminar.title }}"
+                style="max-width: 100%; height: auto; border-radius: 8px;">
+        </div>
+        {% endif %}
+
+        <div class="seminar-meta" style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+            <p style="font-size: 1.2rem; margin-bottom: 10px;"><strong>Date & Time:</strong> {{ seminar.display_date }}
+            </p>
+
+            {% if seminar.has_recording %}
+            <a href="#recording-section" class="btn"
+                style="display: inline-block; padding: 10px 20px; background-color: #0d6efd; color: #ffc107; text-decoration: none; border-radius: 5px; font-weight: bold;">
+                Recording Available
+            </a>
+            {% elif seminar.is_over %}
+            <span class="btn disabled"
+                style="display: inline-block; padding: 10px 20px; background-color: #6c757d; color: white; border-radius: 5px; cursor: default;">
+                Seminar Over
+            </span>
+            {% elif seminar.registration_link %}
+            <a href="{{ seminar.registration_link }}" class="btn btn-primary" target="_blank"
+                style="display: inline-block; padding: 10px 20px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px;">
+                Register Here
+            </a>
+            {% endif %}
+        </div>
+
+        <div class="seminar-abstract">
+            <h3>Abstract</h3>
+            <div class="abstract-content" style="line-height: 1.6;">
+                {{ seminar.abstract | safe | default("No abstract available.") }}
+            </div>
+        </div>
+
+        {% if seminar.embed_url %}
+        <div id="recording-section" class="seminar-recording" style="margin-top: 40px; margin-bottom: 30px;">
+            <h3>Recording</h3>
+            <div
+                style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; border-radius: 8px;">
+                <iframe src="{{ seminar.embed_url }}"
+                    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen></iframe>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

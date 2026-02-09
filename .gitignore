@@ -10,6 +10,6 @@ wheels/
 .venv
 
 # Temporary analysis files
-*.html
+# *.html (Removed to allow templates)
 body_content.txt
 

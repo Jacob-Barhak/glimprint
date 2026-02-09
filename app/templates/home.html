@@ -10,28 +10,102 @@
     </div>
 </section>
 
-<section class="latest-news container">
-    <h2>Latest News</h2>
+<section class="latest-news container" style="margin-bottom: 3rem;">
+    <div class="section-header"
+        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+        <h2>News</h2>
+        <a href="/news" class="btn btn-secondary btn-sm">More News</a>
+    </div>
     <div class="news-grid">
-        {% for item in news_items %}
-        <article class="news-card">
-            <div class="news-image">
-                {% if item.image %}
-                <img src="{{ item.image }}" alt="{{ item.title }}">
-                {% else %}
-                <div class="placeholder-image"></div>
-                {% endif %}
-            </div>
-            <div class="news-content">
-                <h3><a href="/news/{{ item.slug }}">{{ item.title }}</a></h3>
-                <p class="news-date">{{ item.date }}</p>
-                <p class="news-summary">{{ item.summary }}</p>
-            </div>
-        </article>
+        {% for item in latest_news %}
+        <div class="news-card">
+            <a href="{{ item.url }}" class="news-link-wrapper">
+                <div class="news-image">
+                    {% if item.image_url %}
+                    <img src="{{ item.image_url }}" alt="{{ item.title }}">
+                    {% else %}
+                    <div class="news-placeholder news-placeholder">
+                        <span>N</span>
+                    </div>
+                    {% endif %}
+                    <span class="news-badge">News</span>
+                </div>
+                <div class="news-content">
+                    <div class="news-date">{{ item.display_date or item.date }}</div>
+                    <h3>{{ item.title }}</h3>
+                    {% if item.summary %}
+                    <p class="news-summary">{{ item.summary }}</p>
+                    {% endif %}
+                </div>
+            </a>
+        </div>
         {% endfor %}
     </div>
-    <div class="view-all">
-        <a href="/news" class="btn btn-secondary">View All News</a>
+</section>
+
+<section class="latest-webinars container" style="margin-bottom: 3rem;">
+    <div class="section-header"
+        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+        <h2>Webinars</h2>
+        <a href="/activities/seminars" class="btn btn-secondary btn-sm">More Webinars</a>
+    </div>
+    <div class="news-grid">
+        {% for item in latest_seminars %}
+        <div class="news-card">
+            <a href="{{ item.url }}" class="news-link-wrapper">
+                <div class="news-image">
+                    {% if item.image_url %}
+                    <img src="{{ item.image_url }}" alt="{{ item.title }}">
+                    {% else %}
+                    <div class="news-placeholder seminar-placeholder">
+                        <span>S</span>
+                    </div>
+                    {% endif %}
+                    <span class="news-badge">Seminar</span>
+                </div>
+                <div class="news-content">
+                    <div class="news-date">{{ item.display_date or item.date }}</div>
+                    <h3>{{ item.title }}</h3>
+                    {% if item.summary %}
+                    <p class="news-summary">{{ item.summary }}</p>
+                    {% endif %}
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="latest-workshops container" style="margin-bottom: 3rem;">
+    <div class="section-header"
+        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+        <h2>Workshops</h2>
+        <a href="/activities/workshops" class="btn btn-secondary btn-sm">More Workshops</a>
+    </div>
+    <div class="news-grid">
+        {% for item in latest_workshops %}
+        <div class="news-card">
+            <a href="{{ item.url }}" class="news-link-wrapper">
+                <div class="news-image">
+                    {% if item.image_url %}
+                    <img src="{{ item.image_url }}" alt="{{ item.title }}">
+                    {% else %}
+                    <div class="news-placeholder workshop-placeholder">
+                        <span>W</span>
+                    </div>
+                    {% endif %}
+                    <span class="news-badge">Workshop</span>
+                </div>
+                <div class="news-content">
+                    <div class="news-date">{{ item.display_date or item.date }}</div>
+                    <h3>{{ item.title }}</h3>
+                    {% if item.summary %}
+                    <p class="news-summary">{{ item.summary }}</p>
+                    {% endif %}
+                </div>
+            </a>
+        </div>
+        {% endfor %}
     </div>
 </section>
 {% endblock %}

@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Seminars - GLIMPRINT{% endblock %}
+
+{% block content %}
+<section class="page-header generic-header">
+    <div class="container">
+        <h1>Seminars</h1>
+        <p>Explore our latest seminars on immune prediction and modeling.</p>
+    </div>
+</section>
+
+<section class="content-section">
+    <div class="container">
+        <div class="seminars-list-simple">
+            {% for seminar in seminars %}
+            <article class="seminar-item-simple">
+                <div class="seminar-header">
+                    <h3><a href="/activities/seminars/{{ seminar.slug }}">{{ seminar.title }}</a></h3>
+                    {% if seminar.speaker %}
+                    <div class="seminar-speaker">{{ seminar.speaker }}</div>
+                    {% endif %}
+                    {% if seminar.display_date %}
+                    <div class="seminar-date">{{ seminar.display_date }}</div>
+                    {% endif %}
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

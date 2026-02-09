@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}Workshops - GLIMPRINT{% endblock %}
+
+{% block content %}
+<section class="page-header generic-header">
+    <div class="container">
+        <h1>Workshops</h1>
+        <p>Join our upcoming and past workshops on immune prediction and modeling.</p>
+    </div>
+</section>
+
+<section class="content-section">
+    <div class="container">
+        <div class="seminars-list-simple">
+            {% for workshop in workshops %}
+            <article class="seminar-item-simple">
+                <div class="seminar-header">
+                    <h3><a href="/activities/workshops/{{ workshop.slug }}">{{ workshop.title }}</a></h3>
+                    <div class="seminar-meta" style="margin-top: 5px; color: #666;">
+                        {% if workshop.display_date %}
+                        <span class="seminar-date"><i class="fas fa-calendar-alt"></i> {{ workshop.display_date
+                            }}</span>
+                        {% endif %}
+                        {% if workshop.location %}
+                        <span class="seminar-location" style="margin-left: 15px;"><i class="fas fa-map-marker-alt"></i>
+                            {{ workshop.location }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

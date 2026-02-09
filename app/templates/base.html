@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,8 +8,12 @@
     <link rel="stylesheet" href="/static/css/styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/extra_styles.css">
 </head>
+
 <body>
     <header class="site-header">
         <div class="container">
@@ -19,9 +24,29 @@
             <nav class="main-nav">
                 <ul>
                     <li><a href="/">Home</a></li>
-                    <li><a href="/about">About Us</a></li>
-                    <li><a href="/resources">Resources</a></li>
-                    <li><a href="/news">News</a></li>
+                    <li class="dropdown">
+                        <span class="dropbtn">About Us</span>
+                        <div class="dropdown-content">
+                            <a href="/about/history">History of GLIMPRINT</a>
+                            <a href="/news">News</a>
+                            <a href="/about/contact">Contact Us</a>
+                        </div>
+                    </li>
+                    <li class="dropdown">
+                        <span class="dropbtn">Resources</span>
+                        <div class="dropdown-content">
+                            <a href="/resources/runnable-model">GLIMPRINT Runnable Model Page</a>
+                            <a href="/resources/publications">Publications</a>
+                        </div>
+                    </li>
+                    <li class="dropdown">
+                        <span class="dropbtn">Activities</span>
+                        <div class="dropdown-content">
+                            <a href="/activities/seminars">Seminars</a>
+                            <a href="/activities/workshops">Workshops</a>
+                        </div>
+                    </li>
+                    <li><a href="/membership">Membership</a></li>
                     <li><a href="/members">Members</a></li>
                 </ul>
             </nav>
@@ -39,4 +64,5 @@
         </div>
     </footer>
 </body>
+
 </html>

@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Publications - GLIMPRINT{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div class="container">
+        <h1>Publications</h1>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <div class="publications-list">
+            {% for pub in publications %}
+            <div class="publication-item">
+                <h3><a href="{{ pub.link }}" target="_blank">{{ pub.title }}</a></h3>
+                {% if pub.authors %}
+                <p><strong>{{ pub.authors }}</strong></p>
+                {% endif %}
+                {% if pub.description %}
+                <p>{{ pub.description }}</p>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}
