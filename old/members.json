@@ -1,0 +1,14 @@
+[
+    {
+        "name": "Dr. Jane Doe",
+        "role": "Director",
+        "institution": "University of Nebraska-Lincoln",
+        "bio": "Expert in computational immunology."
+    },
+    {
+        "name": "Dr. John Smith",
+        "role": "Co-Director",
+        "institution": "Indiana University",
+        "bio": "Specialist in agent-based modeling."
+    }
+]

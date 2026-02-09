@@ -1,4 +1,5 @@
-from fastapi import APIRouter, Request, HTTPException
+from fastapi import APIRouter, Request, HTTPException, Response
+from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from pathlib import Path
 import markdown
@@ -7,16 +8,18 @@ import frontmatter
 import re
 from datetime import datetime, timedelta
 import pytz
+import sqlite3
 
 router = APIRouter()
 
 BASE_DIR = Path(__file__).resolve().parent
 templates = Jinja2Templates(directory=str(BASE_DIR / "templates"))
-CONTENT_DIR = BASE_DIR / "content"
+DB_PATH = BASE_DIR.parent / "db" / "glimprint.db"
 
-@router.get("/debug_files")
-async def debug_files():
-    import os
+def get_db_connection():
+    conn = sqlite3.connect(DB_PATH)
+    conn.row_factory = sqlite3.Row
+    return conn
     files_list = []
     # Walk from current directory
     for root, dirs, files in os.walk("."):
@@ -196,12 +199,11 @@ async def news_image(slug: str):
 
 @router.get("/resources")
 async def resources(request: Request):
-    # Load from json if exists
-    models_file = CONTENT_DIR / "models.json"
-    models = []
-    if models_file.exists():
-        with open(models_file) as f:
-            models = json.load(f)
+    conn = get_db_connection()
+    rows = conn.execute("SELECT * FROM models").fetchall()
+    conn.close()
+    
+    models = [dict(row) for row in rows]
             
     return templates.TemplateResponse("resources.html", {
         "request": request,
@@ -241,21 +243,7 @@ async def publications(request: Request):
     pubs = [dict(row) for row in rows]
     return templates.TemplateResponse("publications.html", {"request": request, "publications": pubs})
 
-import sqlite3
-from datetime import datetime
-from fastapi import Response
-from fastapi.responses import HTMLResponse
 
-# ... (other imports)
-
-def get_db_connection():
-    conn = sqlite3.connect(CONTENT_DIR / "glimprint.db")
-    conn.row_factory = sqlite3.Row
-    return conn
-
-import pytz
-
-# ...
 
 @router.get("/activities/seminars", response_class=HTMLResponse)
 async def seminars_page(request: Request):
