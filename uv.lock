@@ -158,6 +158,7 @@ dependencies = [
     { name = "jinja2" },
     { name = "markdown" },
     { name = "python-frontmatter" },
+    { name = "pytz" },
     { name = "requests" },
     { name = "uvicorn" },
 ]
@@ -169,6 +170,7 @@ requires-dist = [
     { name = "jinja2", specifier = ">=3.1.6" },
     { name = "markdown", specifier = ">=3.10.1" },
     { name = "python-frontmatter", specifier = ">=1.1.0" },
+    { name = "pytz", specifier = ">=2024.1" },
     { name = "requests", specifier = ">=2.32.5" },
     { name = "uvicorn", specifier = ">=0.40.0" },
 ]
@@ -371,6 +373,15 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/96/de/910fa208120314a12f9a88ea63e03707261692af782c99283f1a2c8a5e6f/python-frontmatter-1.1.0.tar.gz", hash = "sha256:7118d2bd56af9149625745c58c9b51fb67e8d1294a0c76796dafdc72c36e5f6d", size = 16256, upload-time = "2024-01-16T18:50:04.052Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/49/87/3c8da047b3ec5f99511d1b4d7a5bc72d4b98751c7e78492d14dc736319c5/python_frontmatter-1.1.0-py3-none-any.whl", hash = "sha256:335465556358d9d0e6c98bbeb69b1c969f2a4a21360587b9873bfc3b213407c1", size = 9834, upload-time = "2024-01-16T18:50:00.911Z" },
+]
+
+[[package]]
+name = "pytz"
+version = "2025.2"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/f8/bf/abbd3cdfb8fbc7fb3d4d38d320f2441b1e7cbe29be4f23797b4a2b5d8aac/pytz-2025.2.tar.gz", hash = "sha256:360b9e3dbb49a209c21ad61809c7fb453643e048b38924c765813546746e81c3", size = 320884, upload-time = "2025-03-25T02:25:00.538Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/81/c4/34e93fe5f5429d7570ec1fa436f1986fb1f00c3e0f43a589fe2bbcd22c3f/pytz-2025.2-py2.py3-none-any.whl", hash = "sha256:5ddf76296dd8c44c26eb8f4b6f35488f3ccbf6fbbd7adee0b7262d43f0ec2f00", size = 509225, upload-time = "2025-03-25T02:24:58.468Z" },
 ]
 
 [[package]]
