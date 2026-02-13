@@ -92,7 +92,7 @@ def get_aggregated_news(limit=None):
                 "date": d["date"] or "",
                 "announcement_date": d.get("announcement_date"),
                 "image_url": f"/seminars/image/{d['slug']}" if d["image_data"] else None, # Use seminar image
-                "url": f"/activities/seminars/{d['id']}",
+                "url": f"/activities/seminars/{d['slug']}",
                 "summary": f"Speaker: {d.get('speaker', 'Unknown')}"
             })
     except: pass
@@ -117,7 +117,7 @@ def get_aggregated_news(limit=None):
                 "date": d["start_date"] or "",
                 "announcement_date": d.get("announcement_date"),
                 "image_url": f"/workshops/image/{d['slug']}" if d["image_data"] else None,
-                "url": f"/activities/workshops/{d['id']}",
+                "url": f"/activities/workshops/{d['slug']}",
                 "summary": d.get("location", "")
             })
     except: pass
