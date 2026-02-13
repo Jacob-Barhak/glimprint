@@ -89,7 +89,7 @@ python scripts/update_schema.py
 - **Initial Setup**: If no database exists, it creates `db/glimprint.db` with the complete table structure.
 - **Updates**: If the database already exists, it non-destructively updates the schema (e.g., adding missing columns) without deleting your data. Run this whenever you pull code changes that might affect the database.
 
-### 5. Manage Admin Users
+### 6. Manage Admin Users
 The `scripts/create_admin.py` script manages admin credentials.
 
 **Create a new admin:**
@@ -109,7 +109,7 @@ uv run python scripts/create_admin.py admin --delete
 ```
 
 
-### 6. Run the Application (Development)
+### 7. Run the Application (Development)
 To run the application in the development environment with hot-reloading enabled:
 
 ```bash
