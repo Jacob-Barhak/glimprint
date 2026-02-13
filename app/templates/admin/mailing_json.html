@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block title %}JSON Mailing - GLIMPRINT Admin{% endblock %}
+
+{% block content %}
+<section class="section">
+  <div class="container">
+    <h1>Send Bulk Email (JSON)</h1>
+    <a href="/admin" class="btn btn-secondary btn-sm" style="margin-bottom: 2rem;">&larr; Back to Dashboard</a>
+
+
+
+    <p>Structure:</p>
+    <pre>
+[
+    {
+        "To": "alice@example.com",
+        "Cc": "bob@example.com",
+        "Subject": "Hello Alice",
+        "Body": "Dear Alice,\n\n..."
+    },
+    {
+        "To": "carol@example.com",
+        "Subject": "Hello Carol",
+        "Body": "Dear Carol,\n\n..."
+    }
+]
+        </pre>
+
+    <form method="post" action="/admin/mailing/json">
+      <div class="form-group">
+        <label for="json_data">JSON Data</label>
+        <textarea id="json_data" name="json_data" class="form-control" rows="15" required>{{ json_data }}</textarea>
+      </div>
+
+      <div class="form-check" style="margin: 1rem 0;">
+        <input type="checkbox" id="test_only" name="test_only" class="form-check-input">
+        <label for="test_only" class="form-check-label">Test Send (Only to Admin)</label>
+      </div>
+
+      <button type="submit" class="btn btn-primary" style="margin-top: 1rem;" id="sendBtn">Send Batch</button>
+    </form>
+  </div>
+</section>
+
+<!-- Message Modal -->
+<div id="resultModal" class="modal-overlay">
+  <div class="modal-box">
+    <h3>Notification</h3>
+    <p id="modalMessage">{{ message }}</p>
+    <button class="btn btn-primary" onclick="closeModal()">OK</button>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    // Show modal if message exists
+    {% if message %}
+    document.getElementById('resultModal').style.display = 'flex';
+    {% endif %}
+
+    // Disable button on submit
+    const form = document.querySelector('form');
+    const btn = document.getElementById('sendBtn');
+
+    form.addEventListener('submit', function () {
+      if (form.checkValidity()) {
+        btn.disabled = true;
+        btn.textContent = 'Sending...';
+      }
+    });
+  });
+
+  function closeModal() {
+    document.getElementById('resultModal').style.display = 'none';
+  }
+</script>
+{% endblock %}

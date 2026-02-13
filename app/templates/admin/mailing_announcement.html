@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block title %}Send Announcement - GLIMPRINT Admin{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="container">
+        <h1>Send Announcement</h1>
+        <a href="/admin" class="btn btn-secondary btn-sm" style="margin-bottom: 2rem;">&larr; Back to Dashboard</a>
+
+
+
+        <form method="post" action="/admin/mailing/send">
+            <div class="form-group">
+                <label for="subject">Subject Line</label>
+                <small class="form-text text-muted">You can use <code>{name}</code> as a placeholder for the recipient's
+                    name.</small>
+                <input type="text" id="subject" name="subject" class="form-control" value="{{ subject }}" required>
+            </div>
+            <div class="form-group">
+                <label for="body">Message Body (HTML supported)</label>
+                <small class="form-text text-muted">Protected placeholders: <code>{name}</code> (recipient's name),
+                    <code>{email}</code> (recipient's email).</small>
+                <textarea id="body" name="body" class="form-control" rows="10" required>{{ body }}</textarea>
+            </div>
+
+            <div class="form-check" style="margin: 1rem 0;">
+                <input type="checkbox" id="test_only" name="test_only" class="form-check-input">
+                <label for="test_only" class="form-check-label">Test Send (Only to Admin)</label>
+            </div>
+
+            <button type="submit" class="btn btn-primary" id="sendBtn">Send Email</button>
+        </form>
+    </div>
+</section>
+
+<!-- Message Modal -->
+<div id="resultModal" class="modal-overlay">
+    <div class="modal-box">
+        <h3>Notification</h3>
+        <p id="modalMessage">{{ message }}</p>
+        <button class="btn btn-primary" onclick="closeModal()">OK</button>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Show modal if message exists
+        {% if message %}
+        document.getElementById('resultModal').style.display = 'flex';
+        {% endif %}
+
+        // Disable button on submit
+        const form = document.querySelector('form');
+        const btn = document.getElementById('sendBtn');
+
+        form.addEventListener('submit', function () {
+            // Prevent double submission
+            if (form.checkValidity()) {
+                btn.disabled = true;
+                btn.innerHTML = 'Sending... <span class="spinner"></span>'; // Optional spinner if CSS supports it
+            }
+        });
+    });
+
+    function closeModal() {
+        document.getElementById('resultModal').style.display = 'none';
+        // Optional: clear request parameters or redirect to clean URL if desired, 
+        // but user asked to go "back to the form", which is what happens here (reveal form).
+    }
+</script>
+{% endblock %}

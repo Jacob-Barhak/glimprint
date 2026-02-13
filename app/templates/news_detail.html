@@ -26,7 +26,7 @@
             <h3>Related Links</h3>
             <ul>
                 {% for link in item.related_links %}
-                <li><a href="{{ link.url }}" target="_blank">{{ link.text }}</a></li>
+                <li><a href="{{ link.url }}" target="_blank">{{ link.title }}</a></li>
                 {% endfor %}
             </ul>
         </div>

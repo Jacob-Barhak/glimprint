@@ -31,10 +31,12 @@
                     {% endif %}
                 </div>
                 <div class="col-md-6 text-right">
-                    {% if workshop.external_link %}
-                    <a href="{{ workshop.external_link }}" class="btn btn-primary" target="_blank"
-                        style="padding: 10px 20px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px;">More
-                        Details / Register</a>
+                    {% if workshop.related_links_list %}
+                    {% for link in workshop.related_links_list %}
+                    <a href="{{ link.url }}" class="btn btn-primary" target="_blank"
+                        style="padding: 10px 20px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px; margin-bottom: 5px; display: inline-block;">{{
+                        link.title }}</a>
+                    {% endfor %}
                     {% endif %}
                 </div>
             </div>
@@ -43,7 +45,7 @@
         <div class="seminar-abstract">
             <h3>Details</h3>
             <div class="abstract-content" style="line-height: 1.6;">
-                {{ workshop.details | safe }}
+                {{ workshop.description | safe }}
             </div>
         </div>
     </div>

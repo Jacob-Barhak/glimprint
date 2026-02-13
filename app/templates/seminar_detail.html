@@ -24,8 +24,11 @@
         {% endif %}
 
         <div class="seminar-meta" style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
-            <p style="font-size: 1.2rem; margin-bottom: 10px;"><strong>Date & Time:</strong> {{ seminar.display_date }}
+            <p style="font-size: 1.2rem; margin-bottom: 5px;"><strong>Date & Time:</strong> {{ seminar.display_date }}
             </p>
+            {% if seminar.location %}
+            <p style="font-size: 1.2rem; margin-bottom: 10px;"><strong>Location:</strong> {{ seminar.location }}</p>
+            {% endif %}
 
             {% if seminar.has_recording %}
             <a href="#recording-section" class="btn"
@@ -37,11 +40,15 @@
                 style="display: inline-block; padding: 10px 20px; background-color: #6c757d; color: white; border-radius: 5px; cursor: default;">
                 Seminar Over
             </span>
-            {% elif seminar.registration_link %}
-            <a href="{{ seminar.registration_link }}" class="btn btn-primary" target="_blank"
-                style="display: inline-block; padding: 10px 20px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px;">
-                Register Here
-            </a>
+            {% elif seminar.related_links_list %}
+            <div class="links-area" style="margin-top: 10px;">
+                {% for link in seminar.related_links_list %}
+                <a href="{{ link.url }}" class="btn btn-primary" target="_blank"
+                    style="display: inline-block; padding: 10px 20px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px; margin-right: 5px; margin-bottom: 5px;">
+                    {{ link.title }}
+                </a>
+                {% endfor %}
+            </div>
             {% endif %}
         </div>
 

@@ -13,3 +13,5 @@ wheels/
 # *.html (Removed to allow templates)
 body_content.txt
 
+# Environment variables
+.env

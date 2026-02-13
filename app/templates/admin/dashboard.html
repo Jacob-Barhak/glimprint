@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Dashboard - GLIMPRINT{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="container">
+        <div class="section-header" style="display: flex; justify-content: space-between; align-items: center;">
+            <h1>Admin Dashboard</h1>
+            <div>
+                <span style="margin-right: 1rem;">Welcome, {{ user.username }}</span>
+                <a href="/admin/logout" class="btn btn-secondary btn-sm">Logout</a>
+            </div>
+        </div>
+
+        <div class="dashboard-grid"
+            style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 2rem;">
+
+            {% for category, stats in counts.items() %}
+            <div class="card item-card">
+                <div
+                    style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
+                    <h2 style="text-transform: capitalize; margin: 0;">{{ category }}</h2>
+                    {% if stats.pending > 0 %}
+                    <span class="badge badge-warning">{{ stats.pending }} Pending</span>
+                    {% else %}
+                    <span class="badge badge-success">All Clear</span>
+                    {% endif %}
+                </div>
+
+                <p style="color: #666; margin-bottom: 1.5rem;">
+                    Total Records: <strong>{{ stats.total }}</strong>
+                </p>
+
+                <div style="display: flex; gap: 0.5rem;">
+                    <a href="/admin/{{ category }}" class="btn btn-primary btn-sm"
+                        style="flex: 1; text-align: center;">Manage {{ category|capitalize }}</a>
+                    <a href="/submit/{{ category }}" class="btn btn-secondary btn-sm" target="_blank">+ New</a>
+                </div>
+            </div>
+            {% endfor %}
+
+            <!-- Mailing System Card -->
+            <div class="card item-card" style="background-color: #f8f9fa;">
+                <h2>Mailing & Contacts</h2>
+                <div style="margin-top: 1rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                    <a href="/admin/contacts" class="btn btn-outline-primary btn-sm">Manage Contacts</a>
+                    <a href="/admin/mailing/announcement" class="btn btn-outline-primary btn-sm">Send Announcement</a>
+                    <a href="/admin/mailing/json" class="btn btn-outline-primary btn-sm">Send from JSON</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<style>
+    .item-card {
+        background: #fff;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        padding: 1.5rem;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .item-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+</style>
+{% endblock %}
