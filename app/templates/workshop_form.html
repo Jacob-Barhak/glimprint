@@ -1,0 +1,160 @@
+{% extends "base.html" %}
+
+{% block title %}{{ title_text }} - GLIMPRINT{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="container">
+        <h1>{{ title_text }}</h1>
+        {% if is_admin %}
+        <a href="/admin/workshops" class="btn btn-secondary btn-sm" style="margin-bottom: 1rem;">&larr; Back to List</a>
+        {% endif %}
+
+        {% if error %}
+        <div class="alert alert-danger">{{ error }}</div>
+        {% endif %}
+
+        <form method="post" action="{{ form_action }}" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="title">Title</label>
+                <input type="text" id="title" name="title" class="form-control" value="{{ item.title if item else '' }}"
+                    required>
+            </div>
+            <div class="form-group">
+                <label for="start_date">Start Date</label>
+                <input type="date" id="start_date" name="start_date" class="form-control"
+                    value="{{ item.start_date if item else '' }}" required>
+            </div>
+            <div class="form-group">
+                <label for="end_date">End Date</label>
+                <input type="date" id="end_date" name="end_date" class="form-control"
+                    value="{{ item.end_date if item else '' }}">
+            </div>
+            <div class="form-group">
+                <label for="location">Location</label>
+                <input type="text" id="location" name="location" class="form-control"
+                    value="{{ item.location if item else '' }}">
+            </div>
+            <div class="form-group">
+
+
+                <div class="form-group">
+                    <label>Related Links</label>
+                    <div id="links-container">
+                        <!-- Dynamic links -->
+                    </div>
+                    <button type="button" class="btn btn-sm btn-secondary" onclick="addLinkRow()">Add Another
+                        Link</button>
+                    <input type="hidden" name="related_links" id="related_links">
+                    <div style="display:none;" id="current-links-data">{{ item.related_links if item else '[]' }}</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Description (HTML allowed)</label>
+                    <textarea id="description" name="description" class="form-control" rows="10"
+                        required>{{ item.description if item else '' }}</textarea>
+                </div>
+                <div class="form-group">
+                    <label for="image">Workshop Image {{ '(Optional)' if item else '' }}</label>
+                    <input type="file" id="image" name="image" class="form-control" accept="image/*"
+                        onchange="previewImage(this)">
+                    {% if item and item.image_mime %}
+                    <div style="margin-top: 5px;">
+                        <small>Current Image:</small><br>
+                        <img src="/workshops/image/{{ item.slug }}" alt="Current Image" style="max-width: 200px;">
+                    </div>
+                    {% endif %}
+                    <img id="image-preview" src="#" alt="New Image Preview"
+                        style="display:none; max-width: 200px; margin-top: 10px;">
+                </div>
+
+                {% if is_admin and item %}
+                <div class="form-group">
+                    <label for="approval_status">Approval Status</label>
+                    <select id="approval_status" name="approval_status" class="form-control">
+                        {% set status = item.approval_status|from_json %}
+                        <option value="pending_approval" {% if status.status=='pending_approval' %}selected{% endif %}>
+                            Pending</option>
+                        <option value="approved" {% if status.status=='approved' %}selected{% endif %}>Approved</option>
+                        <option value="rejected" {% if status.status=='rejected' %}selected{% endif %}>Rejected</option>
+                    </select>
+                    {% if status.status == 'approved' and status.by %}
+                    <small class="text-success">Approved by {{ status.by }} on {{ status.at }}</small>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label>Created At (Read-only)</label>
+                    <input type="text" class="form-control" value="{{ item.created_at }}" readonly disabled>
+                </div>
+                {% endif %}
+
+                <div style="margin-top: 1rem;">
+                    <button type="submit" class="btn btn-primary" onclick="prepareLinks()">{{ 'Save Changes' if item
+                        else 'Submit Workshop'
+                        }}</button>
+                    {% if is_admin and item and (item.approval_status|from_json).status != 'approved' %}
+                    <button type="submit" name="approval_status" value="approved" class="btn btn-success"
+                        style="margin-left: 10px;" onclick="prepareLinks()">Approve Submission</button>
+                    {% endif %}
+                </div>
+        </form>
+
+        <script>
+            function previewImage(input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        document.getElementById('image-preview').style.display = 'block';
+                        document.getElementById('image-preview').src = e.target.result;
+                    }
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+
+            // Links Logic
+            document.addEventListener('DOMContentLoaded', function () {
+                var rawData = document.getElementById('current-links-data').innerText;
+                try {
+                    var links = JSON.parse(rawData);
+                    if (Array.isArray(links)) {
+                        links.forEach(function (link) {
+                            addLinkRow(link.title || link.text || "", link.url || "");
+                        });
+                    }
+                } catch (e) { console.error("Error parsing links", e); }
+
+                if (document.getElementById('links-container').children.length === 0) {
+                    addLinkRow();
+                }
+            });
+
+            function addLinkRow(title = "", url = "") {
+                var container = document.getElementById('links-container');
+                var div = document.createElement('div');
+                div.className = 'link-row';
+                div.style = "display: flex; gap: 10px; margin-bottom: 5px;";
+                div.innerHTML = `
+                    <input type="text" placeholder="Link Title" class="form-control link-title" value="${title.replace(/"/g, '&quot;')}">
+                    <input type="url" placeholder="URL" class="form-control link-url" value="${url.replace(/"/g, '&quot;')}">
+                    <button type="button" class="btn btn-danger btn-sm" onclick="this.parentElement.remove()">X</button>
+                `;
+                container.appendChild(div);
+            }
+
+            function prepareLinks() {
+                var links = [];
+                var rows = document.querySelectorAll('.link-row');
+                rows.forEach(function (row) {
+                    var title = row.querySelector('.link-title').value;
+                    var url = row.querySelector('.link-url').value;
+                    if (title && url) {
+                        links.push({ title: title, url: url });
+                    }
+                });
+                document.getElementById('related_links').value = JSON.stringify(links);
+            }
+        </script>
+    </div>
+</section>
+{% endblock %}

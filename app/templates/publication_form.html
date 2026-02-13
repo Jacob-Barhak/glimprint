@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block title %}{{ title_text }} - GLIMPRINT{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="container">
+        <h1>{{ title_text }}</h1>
+        {% if is_admin %}
+        <a href="/admin/publications" class="btn btn-secondary btn-sm" style="margin-bottom: 1rem;">&larr; Back to
+            List</a>
+        {% endif %}
+
+        {% if error %}
+        <div class="alert alert-danger">{{ error }}</div>
+        {% endif %}
+
+        <form method="post" action="{{ form_action }}">
+            <div class="form-group">
+                <label for="title">Title</label>
+                <input type="text" id="title" name="title" class="form-control" value="{{ item.title if item else '' }}"
+                    required>
+            </div>
+            <div class="form-group">
+                <label for="authors">Authors</label>
+                <input type="text" id="authors" name="authors" class="form-control"
+                    value="{{ item.authors if item else '' }}" required>
+            </div>
+            <div class="form-group">
+                <label for="description">Description (Venue/Journal info)</label>
+                <textarea id="description" name="description" class="form-control"
+                    rows="3">{{ item.description if item else '' }}</textarea>
+            </div>
+            <div class="form-group">
+                <label for="link">Link (DOI/URL)</label>
+                <input type="url" id="link" name="link" class="form-control" value="{{ item.link if item else '' }}">
+            </div>
+            <div class="form-group">
+                <label for="year">Year</label>
+                <input type="number" id="year" name="year" class="form-control" value="{{ item.year if item else '' }}">
+            </div>
+
+            {% if is_admin and item %}
+            <div class="form-group">
+                <label for="approval_status">Approval Status</label>
+                <select id="approval_status" name="approval_status" class="form-control">
+                    {% set status = item.approval_status|from_json %}
+                    <option value="pending_approval" {% if status.status=='pending_approval' %}selected{% endif %}>
+                        Pending</option>
+                    <option value="approved" {% if status.status=='approved' %}selected{% endif %}>Approved</option>
+                    <option value="rejected" {% if status.status=='rejected' %}selected{% endif %}>Rejected</option>
+                </select>
+                {% if status.status == 'approved' and status.by %}
+                <small class="text-success">Approved by {{ status.by }} on {{ status.at }}</small>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label>Created At (Read-only)</label>
+                <input type="text" class="form-control" value="{{ item.created_at }}" readonly disabled>
+            </div>
+            {% endif %}
+
+            <div style="margin-top: 1rem;">
+                <button type="submit" class="btn btn-primary">{{ 'Save Changes' if item else 'Submit Publication'
+                    }}</button>
+                {% if is_admin and item and (item.approval_status|from_json).status != 'approved' %}
+                <button type="submit" name="approval_status" value="approved" class="btn btn-success"
+                    style="margin-left: 10px;">Approve Submission</button>
+                {% endif %}
+            </div>
+        </form>
+    </div>
+</section>
+{% endblock %}

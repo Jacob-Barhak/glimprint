@@ -17,7 +17,7 @@
                 <a href="/members/{{ member.slug }}" class="member-link">
                     <div class="member-image">
                         {% if member.image_data %}
-                        <img src="/members/image/{{ member.slug }}" alt="{{ member.name }}">
+                        <img src="/members/image/{{ member.slug }}" alt="{{ member.name }}" loading="lazy">
                         {% else %}
                         <div class="placeholder-member"></div>
                         {% endif %}
@@ -34,7 +34,7 @@
                         {% if member.links_list %}
                         <div class="member-links">
                             {% for link in member.links_list %}
-                            <a href="{{ link.url }}" target="_blank">{{ link.text }}</a><br>
+                            <a href="{{ link.url }}" target="_blank">{{ link.title }}</a><br>
                             {% endfor %}
                         </div>
                         {% endif %}

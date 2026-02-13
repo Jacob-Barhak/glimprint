@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Global Alliance for Immune Prediction and Intervention{% endblock %}</title>
     <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -48,6 +49,27 @@
                     </li>
                     <li><a href="/membership">Membership</a></li>
                     <li><a href="/members">Members</a></li>
+
+                    <li class="dropdown">
+                        <span class="dropbtn">Submissions</span>
+                        <div class="dropdown-content">
+                            <a href="/submit/news">Submit News</a>
+                            <a href="/submit/seminars">Submit Seminar</a>
+                            <a href="/submit/workshops">Submit Workshop</a>
+                            <a href="/submit/publications">Submit Publication</a>
+                            <a href="/submit/members">Submit Member Profile</a>
+                        </div>
+                    </li>
+
+                    {% if request.session.get('user') %}
+                    <li class="dropdown">
+                        <span class="dropbtn" style="color: #007bff;">Admin</span>
+                        <div class="dropdown-content">
+                            <a href="/admin">Dashboard</a>
+                            <a href="/admin/logout" style="color: red;">Logout</a>
+                        </div>
+                    </li>
+                    {% endif %}
                 </ul>
             </nav>
         </div>
@@ -60,7 +82,11 @@
     <footer class="site-footer">
         <div class="container">
             <p>&copy; 2026 Global Alliance for Immune Prediction and Intervention.</p>
-            <p>University of Nebraska–Lincoln</p>
+            <p>University of Nebraska–Lincoln
+                {% if not request.session.get('user') %}
+                | <a href="/admin/login" style="color: inherit; text-decoration: none;">Admin Login</a>
+                {% endif %}
+            </p>
         </div>
     </footer>
 </body>

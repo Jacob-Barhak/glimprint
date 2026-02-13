@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+
+{% block title %}Manage {{ category|capitalize }} - GLIMPRINT Admin{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="container">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+            <h1>Manage {{ category|capitalize }}</h1>
+            <div>
+                <a href="/admin" class="btn btn-secondary btn-sm">&larr; Dashboard</a>
+                <a href="/submit/{{ category }}" class="btn btn-primary btn-sm" target="_blank">+ New {{
+                    category[:-1]|capitalize }}</a>
+            </div>
+        </div>
+
+        {% if message %}
+        <div class="alert alert-info">{{ message }}</div>
+        {% endif %}
+
+        <div class="table-container">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Title / Name</th>
+                        <th>Preview</th>
+                        <th>Created At</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in items %}
+                    {% set status = item.approval_status|from_json %}
+                    {% set is_pending = status.status != 'approved' %}
+                    {% set item_pk = item.slug if category == 'news' else item.id %}
+                    <tr {% if is_pending %}style="background-color: #fff3cd;" {% endif %}>
+                        <td>{{ item.id or '' }}</td>
+                        <td>
+                            <strong>{{ item.title or item.name }}</strong>
+                        </td>
+                        <td>
+                            {% if item.image_data and item.slug %}
+                            <div class="hover-image-container">
+                                <img src="/{{ category }}/image/{{ item.slug }}" class="hover-image-thumb">
+                                <img src="/{{ category }}/image/{{ item.slug }}" class="hover-image-full">
+                            </div>
+                            {% endif %}
+
+                            {% set long_text = item.body or item.abstract or item.description or
+                            item.statement %}
+                            {% if long_text %}
+                            <div class="truncate-text">
+                                {{ long_text | striptags }}
+                            </div>
+                            {% endif %}
+                        </td>
+                        <td>{{ item.created_at or 'N/A' }}</td>
+                        <td>
+                            <span class="badge badge-{{ 'success' if status.status == 'approved' else 'warning' }}">
+                                {{ status.status|replace('_', ' ')|capitalize }}
+                            </span>
+                            {% if status.by %}
+                            <br><small class="text-muted">by {{ status.by }}</small>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if is_pending %}
+                            <form method="post" action="/admin/{{ category }}/{{ item_pk }}/approve"
+                                style="display:inline;">
+                                <button type="submit" class="btn btn-sm btn-success">Approve</button>
+                            </form>
+                            {% endif %}
+                            <a href="/admin/{{ category }}/{{ item_pk }}/edit"
+                                class="btn btn-sm btn-outline-primary">Edit</a>
+                            <form method="post" action="/admin/{{ category }}/{{ item_pk }}/delete"
+                                style="display:inline;" onsubmit="return confirm('Are you sure?');">
+                                <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="5" class="text-center">No items found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+{% endblock %}

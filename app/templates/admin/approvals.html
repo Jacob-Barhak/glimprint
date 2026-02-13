@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}Pending Approvals - GLIMPRINT Admin{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="container">
+        <h1>Pending Approvals</h1>
+        <a href="/admin" class="btn btn-secondary btn-sm" style="margin-bottom: 2rem;">&larr; Back to Dashboard</a>
+
+        {% if items %}
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Type</th>
+                        <th>Title/Name</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in items %}
+                    <tr>
+                        <td>{{ item.table_name|capitalize }}</td>
+                        <td>{{ item.title or item.name }}</td>
+                        <td>
+                            <form method="post" action="/admin/approve/{{ item.table_name }}/{{ item.slug }}"
+                                style="display:inline;">
+                                <button type="submit" class="btn btn-success btn-sm">Approve</button>
+                            </form>
+                            <a href="/admin/{{ item.table_name }}/edit/{{ item.slug }}"
+                                class="btn btn-secondary btn-sm">Edit</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <p>No pending approvals.</p>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}
